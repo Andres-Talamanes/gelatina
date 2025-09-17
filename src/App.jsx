@@ -1,21 +1,20 @@
-// App.tsx
-import React from "react";
-
-// Importamos los componentes
-import Navbar from "./components/Navbar";
-import Hero from "./components/Hero";
-import ProductCard from "./components/ProductCard";
-import Footer from "./components/Footer";
-
 function App() {
+  const [productos, setProductos] = useState([]);
+
+  useEffect(() => {
+    const fetchProductos = async () => {
+      const { data } = await supabase.from("productos").select("*");
+      setProductos(data || []);
+    };
+    fetchProductos();
+  }, []);
+
   return (
     <div>
       <Navbar />
       <Hero />
-      <ProductCard />
+      <ProductCard productos={productos} />
       <Footer />
     </div>
   );
 }
-
-export default App;
